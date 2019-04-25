@@ -1,0 +1,10 @@
+---
+ - hosts: localhost
+   become: true
+   tasks:
+     - name: Installs nginx web server
+       apt: pkg=nginx state=present update_cache=true
+
+
+     - name: Install nginx server
+       apt: name=nginx state=present
