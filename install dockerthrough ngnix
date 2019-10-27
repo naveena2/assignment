@@ -1,0 +1,35 @@
+---
+- name: Install docker
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Add epel-release repo
+      yum:
+        name: epel-release
+        state: present
+    - name: Install nginx server
+      yum: name=nginx state=present
+
+    - name: Install yum utils
+      yum:
+        name: yum-utils
+        state: latest
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/redhat/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: latest
+
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
